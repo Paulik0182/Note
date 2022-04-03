@@ -21,7 +21,7 @@ public interface NoteRepo {
     //Интерфейсы взаимодействия
     void addNote(NoteEntity noteEntity);// добавить заметку
 
-    List<NoteEntity> getNoteEntity();//получить список всех заметок (чтение)
+    List<NoteEntity> getNotes();//получить список всех заметок (чтение)
 
     void deleteNoteById(int id);//удалить заметку по ее id
 

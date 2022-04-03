@@ -23,7 +23,7 @@ public class NoteRepoImpl implements NoteRepo {
     }
 
     @Override
-    public List<NoteEntity> getNoteEntity() {
+    public List<NoteEntity> getNotes() {
         return new ArrayList<>(data);//отдаем копию списка, копию коллекции (лучше отдавать копию чтобы никто не повредил оригинальные данные)
     }
 
