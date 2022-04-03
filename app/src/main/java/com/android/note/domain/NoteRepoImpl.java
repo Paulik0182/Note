@@ -1,4 +1,7 @@
-package com.android.note;
+package com.android.note.domain;
+
+import com.android.note.domain.NoteEntity;
+import com.android.note.domain.NoteRepo;
 
 import java.util.ArrayList;
 import java.util.List;

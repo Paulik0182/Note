@@ -1,4 +1,4 @@
-package com.android.note;
+package com.android.note.domain;
 /**
 Данный класс для сущностей.
  здесь заводим поля - объекты (делаем структуру сущности). Все объекты (поля) private,

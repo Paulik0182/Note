@@ -14,6 +14,9 @@ package com.android.note;
 
 import android.app.Application;
 
+import com.android.note.domain.NoteRepo;
+import com.android.note.domain.NoteRepoImpl;
+
 public class Add extends Application {
 
     //создаем репозиторий (хранилище), указываем релиазацию хранилища.

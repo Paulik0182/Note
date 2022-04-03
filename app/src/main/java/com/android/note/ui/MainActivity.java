@@ -1,11 +1,12 @@
-package com.android.note;
+package com.android.note.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import java.util.LinkedList;
-import java.util.List;
+import com.android.note.Add;
+import com.android.note.domain.NoteRepo;
+import com.android.note.R;
 
 public class MainActivity extends AppCompatActivity {
 
