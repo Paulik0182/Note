@@ -15,5 +15,8 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
     //конструктор на входе у которого View
     public NoteViewHolder(@NonNull View itemView) {
         super(itemView);
+        itemView.setOnClickListener(v -> {
+            //todo click button
+        });
     }
 }
