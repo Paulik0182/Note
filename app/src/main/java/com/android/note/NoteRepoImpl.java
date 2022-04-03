@@ -12,6 +12,8 @@ public class NoteRepoImpl implements NoteRepo {
     //заводим массив сущьности (хранилище заметок на основе массива)
     private List<NoteEntity> data = new ArrayList<>();
 
+    private int counter = 0;
+
     @Override
     public void addNote(NoteEntity noteEntity) {
         data.add(noteEntity);//добавляем заметку в список
@@ -30,5 +32,15 @@ public class NoteRepoImpl implements NoteRepo {
                 break;
             }
         }
+    }
+
+    @Override
+    public void deleteAll() {
+        data.clear();
+    }
+
+    @Override
+    public int createRandomID() {
+        return counter++;
     }
 }

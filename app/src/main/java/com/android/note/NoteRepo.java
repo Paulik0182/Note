@@ -9,6 +9,7 @@ import java.util.List;
  * - Read Читать
  * - Update Обновлять
  * - Delete Удалять
+ * Репозиторий не ограничивается только этими параметрами
  *
  * Взаимодействия всегда осуществляется через интерфейсы
  */
@@ -22,4 +23,7 @@ public interface NoteRepo {
 
     void deleteNoteById(int id);//удалить заметку по ее id
 
+    void deleteAll();//удалить все заметки
+
+    int createRandomID();
 }
