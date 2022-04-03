@@ -34,7 +34,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         return viewHolder;
     }
 
-    //к имеющимуся holder подставить данные
+    //к имеющемуся holder подставить данные
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
 
@@ -53,5 +53,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     //завели метод чтобы передать заметки в адаптер
     public void setData(List<NoteEntity> notes){
         data = notes;
+        notifyDataSetChanged();//обновляет данные
     }
 }

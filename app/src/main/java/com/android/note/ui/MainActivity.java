@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import com.android.note.Add;
+import com.android.note.domain.NoteEntity;
 import com.android.note.domain.NoteRepo;
 import com.android.note.R;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
         //достаем репозиторий из application (класс Add)
 //        noteRepo = ((Add) getApplication()).getNoteRepo();//вариант написания 1
         noteRepo = getAdd().getNoteRepo();//вариант написания 2 (более читаемый код)
+
+        //достаем данные из репозитория
+        List<NoteEntity> notes = noteRepo.getNotes();
+        //Кладем данные в адаптер
 
         adapter.setData(noteRepo.getNotes());
     }
