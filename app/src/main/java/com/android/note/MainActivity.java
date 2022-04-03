@@ -10,7 +10,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     //создали список сущностей
-    private List<NoteEntity> noteEntityList = new LinkedList<>();
+//    private List<NoteEntity> noteEntityList = new LinkedList<>();
+
+    //создаем репозиторий (хранилище), указываем релиазацию хранилища.
+    //
+    private NoteRepo noteRepo = new NoteRepoImpl();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
