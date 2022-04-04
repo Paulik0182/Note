@@ -15,12 +15,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.note.R;
 import com.android.note.domain.NoteEntity;
+import com.android.note.domain.NoteRepoImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
 
     private List<NoteEntity> data;
+    private InteractionListener listener;
+
+    public NoteAdapter(List<NoteEntity> data, InteractionListener listener) {
+        this.data = new ArrayList<>(data);
+        this.listener = listener;
+    }
 
     //создание ViewHolder (создаем view)
     @NonNull
@@ -30,7 +38,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         //создаем NoteViewHolder
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.item_note, parent, false);
-        NoteViewHolder viewHolder = new NoteViewHolder(itemView);
+        NoteViewHolder viewHolder = new NoteViewHolder(itemView, listener);
         return viewHolder;
     }
 
@@ -54,5 +62,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     public void setData(List<NoteEntity> notes){
         data = notes;
         notifyDataSetChanged();//обновляет данные
+    }
+
+    public interface InteractionListener{
+        void  onItemClickListener(NoteRepoImpl noteRepoImpl);
     }
 }

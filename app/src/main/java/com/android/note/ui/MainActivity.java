@@ -6,11 +6,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.android.note.Add;
 import com.android.note.domain.NoteEntity;
 import com.android.note.domain.NoteRepo;
 import com.android.note.R;
+import com.android.note.domain.NoteRepoImpl;
 
 import java.util.List;
 
@@ -27,6 +29,14 @@ public class MainActivity extends AppCompatActivity {
     private NoteRepo noteRepo;
     private RecyclerView recyclerView;
     private NoteAdapter adapter;
+
+    private NoteAdapter.InteractionListener listener = new NoteAdapter.InteractionListener() {
+        @Override
+        public void onItemClickListener(NoteRepoImpl noteRepoImpl) {
+           String sb = "onItemClickListener -" + noteRepoImpl.getNotes();
+            Toast.makeText(MainActivity.this, sb, Toast.LENGTH_SHORT).show();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
