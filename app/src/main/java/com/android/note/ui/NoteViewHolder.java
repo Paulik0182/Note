@@ -22,7 +22,7 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
 
         //обработка нажатия на item
         itemView.setOnClickListener(v -> {
-            listener.onItemClickListener(noteRepoImpl);
+            listener.onItemClickListener((NoteRepoImpl) noteRepoImpl.getNotes());
         });
     }
 }

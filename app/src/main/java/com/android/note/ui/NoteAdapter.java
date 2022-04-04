@@ -22,11 +22,17 @@ import java.util.List;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
 
-    private List<NoteEntity> data;
-    private InteractionListener listener;
+    private List<NoteEntity> data; //список сущьностей
+    private InteractionListener listener; //слушатель
 
-    public NoteAdapter(List<NoteEntity> data, InteractionListener listener) {
-        this.data = new ArrayList<>(data);
+    //вместе со списком data, передаем объект listener
+    public NoteAdapter() {
+        /**
+         * !!!почему из-за этой строки (this.data = new ArrayList<>(data);)
+         * все валится NullPointerException
+         * я думал, что к элементу массива можно обращатся?
+         */
+//        this.data = new ArrayList<>(data);
         this.listener = listener;
     }
 
@@ -46,7 +52,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
 
-        final NoteEntity noteEntity = data.get(position);//получили данные
+        final NoteEntity noteEntity = data.get(position);//получили данные. Счетчик - position, счетчик необходим для класса RecyclerView
 
         holder.titleTextView.setText(noteEntity.getTitle());
         holder.contentTextView.setText(noteEntity.getContent());
@@ -55,7 +61,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     //вернуть количество данных
     @Override
     public int getItemCount() {
-        return data.size();//взяли размер массива
+        return data.size();//взяли размер массива. Возвращаем количество элементов в списк (size)
     }
 
     //завели метод чтобы передать заметки в адаптер
@@ -63,6 +69,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         data = notes;
         notifyDataSetChanged();//обновляет данные
     }
+
+    /**
+     * Данный интерфейс описывает контракт, а именно нажатие на кнопку.
+     * Далее это нажатие необходимо реализовать в class NoteAdapter.
+     * <p>
+     * Интерфейсом нельзя создать объект, но передать можно. Можно передавать элементы которые сделаны поразному
+     * (выполняют одно и тоже действие), но у них может быть разная реализация.
+     * Обеспечивается единообразная работа с разными источниками данных.
+     */
 
     public interface InteractionListener{
         void  onItemClickListener(NoteRepoImpl noteRepoImpl);

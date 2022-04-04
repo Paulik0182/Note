@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="#ABFB99"
+    android:backgroundTint="@color/sea_wave"
     android:clickable="true"
     android:focusable="true">
 
@@ -11,14 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="@dimen/padding_layout">
     <TextView
         android:id="@+id/title_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="1"
         android:singleLine="true"
-        android:textSize="22sp"
+        android:textSize="@dimen/heading_title"
         android:textStyle="bold"
         tools:text="Заголовок заметки" />
 
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:singleLine="true"
-        android:textSize="18sp"
+        android:textSize="@dimen/content"
         android:textStyle="italic"
         tools:text="Текст, Текст, Текст, Текст" />
 

@@ -4,8 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.note.Add;
@@ -30,11 +31,18 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private NoteAdapter adapter;
 
-    private NoteAdapter.InteractionListener listener = new NoteAdapter.InteractionListener() {
+    private final NoteAdapter.InteractionListener listener = new NoteAdapter.InteractionListener() {
         @Override
         public void onItemClickListener(NoteRepoImpl noteRepoImpl) {
-           String sb = "onItemClickListener -" + noteRepoImpl.getNotes();
+            String sb = "onItemClickListener -" + noteRepoImpl.getNotes();
             Toast.makeText(MainActivity.this, sb, Toast.LENGTH_SHORT).show();
+
+            Intent intent = SecondActivity.getLaunchIntent
+                    (
+                            MainActivity.this,
+                            SecondActivity.TITLE_EXTRA_KEY,
+                            SecondActivity.CONTENT_EXTRA_KEY
+                    );
         }
     };
 
@@ -61,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
         //чтобы соединить noteRepo и recyclerView (передать данные во view)
         //передаем способ как компановать экран
         recyclerView.setLayoutManager(new LinearLayoutManager(this));//можно передать ориентацию и т.д.
-        //обязательно нужно установить адаптер (это такая сущность котороя превращает notEntity в
-        adapter =  new NoteAdapter();
+        //обязательно нужно установить адаптер (это такая сущность котороя превращает noteEntity в
+        adapter = new NoteAdapter();
         recyclerView.setAdapter(adapter);
     }
 
-    private Add getAdd(){
+    private Add getAdd() {
         return (Add) getApplication();
     }
 }
