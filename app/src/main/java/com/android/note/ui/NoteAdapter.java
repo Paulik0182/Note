@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.note.R;
 import com.android.note.domain.NoteEntity;
-import com.android.note.domain.NoteRepoImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +25,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     private InteractionListener listener; //слушатель
 
     //вместе со списком data, передаем объект listener
-    public NoteAdapter() {
-        /**
-         * !!!почему из-за этой строки (this.data = new ArrayList<>(data);)
-         * все валится NullPointerException
-         * я думал, что к элементу массива можно обращатся?
-         */
-//        this.data = new ArrayList<>(data);
+    public NoteAdapter(List<NoteEntity> data, InteractionListener listener) {
+        this.data = new ArrayList<>(data);
         this.listener = listener;
     }
 
@@ -40,7 +34,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     @NonNull
     @Override
     public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         //создаем NoteViewHolder
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.item_note, parent, false);
@@ -48,6 +41,10 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         return viewHolder;
     }
 
+    //Связываем два поля указанные в конструкторе
+    //на вход функции принемается сущность (модель) и привязываем эту модель к разметке
+    //возможна любая комбинация, количество полей.
+    //для каждой разметки может быть свая комбинация, набор полей.
     //к имеющемуся holder подставить данные
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
@@ -80,6 +77,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
      */
 
     public interface InteractionListener{
-        void  onItemClickListener(NoteRepoImpl noteRepoImpl);
+        void  onItemClickListener(NoteEntity noteEntity);
     }
 }

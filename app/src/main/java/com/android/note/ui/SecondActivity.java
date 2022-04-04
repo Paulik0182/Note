@@ -26,7 +26,6 @@ public class SecondActivity extends AppCompatActivity {
     private EditText headingTitleEt = null;
     private EditText contentEt = null;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

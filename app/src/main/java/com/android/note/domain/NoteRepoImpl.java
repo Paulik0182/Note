@@ -15,7 +15,7 @@ import java.util.List;
 public class NoteRepoImpl implements NoteRepo {
 
     //заводим массив сущьности (хранилище заметок на основе массива)
-    private List<NoteEntity> data = new ArrayList<>();
+    public static List<NoteEntity> data = new ArrayList<>();
 
     private int counter = 0;
 

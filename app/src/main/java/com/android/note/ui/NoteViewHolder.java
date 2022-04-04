@@ -7,11 +7,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.note.R;
+import com.android.note.domain.NoteEntity;
 import com.android.note.domain.NoteRepoImpl;
 
 public class NoteViewHolder extends RecyclerView.ViewHolder {
 
-    private NoteRepoImpl noteRepoImpl;
+    private NoteEntity noteEntity;
 
     public TextView titleTextView = itemView.findViewById(R.id.title_text_view);
     public TextView contentTextView = itemView.findViewById(R.id.content_text_view);
@@ -22,7 +23,7 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
 
         //обработка нажатия на item
         itemView.setOnClickListener(v -> {
-            listener.onItemClickListener((NoteRepoImpl) noteRepoImpl.getNotes());
+            listener.onItemClickListener(noteEntity);
         });
     }
 }

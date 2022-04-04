@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -33,8 +32,10 @@ public class MainActivity extends AppCompatActivity {
 
     private final NoteAdapter.InteractionListener listener = new NoteAdapter.InteractionListener() {
         @Override
-        public void onItemClickListener(NoteRepoImpl noteRepoImpl) {
-            String sb = "onItemClickListener -" + noteRepoImpl.getNotes();
+        public void onItemClickListener(NoteEntity noteEntity) {
+            String sb = "onItemClickListener -"
+                    + noteEntity.getTitle()
+                    + noteEntity.getContent();
             Toast.makeText(MainActivity.this, sb, Toast.LENGTH_SHORT).show();
 
             Intent intent = SecondActivity.getLaunchIntent
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         //передаем способ как компановать экран
         recyclerView.setLayoutManager(new LinearLayoutManager(this));//можно передать ориентацию и т.д.
         //обязательно нужно установить адаптер (это такая сущность котороя превращает noteEntity в
-        adapter = new NoteAdapter();
+        adapter = new NoteAdapter(NoteRepoImpl.data, listener);
         recyclerView.setAdapter(adapter);
     }
 
