@@ -33,11 +33,11 @@ public class SecondActivity extends AppCompatActivity {
         initViews();
         setListeners();
 
-        Intent intent = new Intent();
-        int title = intent.getIntExtra(TITLE_OUT_EXTRA_KEY, 0);
-        int content = intent.getIntExtra(CONTENT_OUT_EXTRA_KEY, 0);
-        headingTitleEt.setText(String.valueOf(title));
-        contentEt.setText(String.valueOf(content));
+        Intent intent = getIntent();
+        String title = intent.getStringExtra(TITLE_OUT_EXTRA_KEY);
+        String content = intent.getStringExtra(CONTENT_OUT_EXTRA_KEY);
+        headingTitleEt.setText(title);
+        contentEt.setText(content);
 
     }
 
