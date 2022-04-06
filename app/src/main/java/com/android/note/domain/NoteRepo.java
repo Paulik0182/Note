@@ -1,7 +1,5 @@
 package com.android.note.domain;
 
-import com.android.note.domain.NoteEntity;
-
 import java.util.List;
 
 /**

@@ -17,8 +17,8 @@ import com.android.note.R;
 
 public class SecondActivity extends AppCompatActivity {
 
-    public static final String TITLE_EXTRA_KEY = "TITLE_EXTRA_KEY";
-    public static final String CONTENT_EXTRA_KEY = "CONTENT_EXTRA_KEY";
+    public static final String TITLE_OUT_EXTRA_KEY = "TITLE_OUT_EXTRA_KEY";
+    public static final String CONTENT_OUT_EXTRA_KEY = "CONTENT_OUT_EXTRA_KEY";
 
     private Button saveButton = null;
     private Button cancelButton = null;
@@ -32,6 +32,13 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
         initViews();
         setListeners();
+
+        Intent intent = new Intent();
+        int title = intent.getIntExtra(TITLE_OUT_EXTRA_KEY, 0);
+        int content = intent.getIntExtra(CONTENT_OUT_EXTRA_KEY, 0);
+        headingTitleEt.setText(String.valueOf(title));
+        contentEt.setText(String.valueOf(content));
+
     }
 
     private void initViews() {
@@ -46,8 +53,8 @@ public class SecondActivity extends AppCompatActivity {
     public static Intent getLaunchIntent(Context context, String title, String content) {
         Intent intent = new Intent(context, SecondActivity.class);
 
-        intent.putExtra(TITLE_EXTRA_KEY, title);
-        intent.putExtra(CONTENT_EXTRA_KEY, content);
+        intent.putExtra(TITLE_OUT_EXTRA_KEY, title );
+        intent.putExtra(CONTENT_OUT_EXTRA_KEY, content);
 
         context.startActivity(intent);
         return intent;

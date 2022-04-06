@@ -1,5 +1,6 @@
 package com.android.note.ui;
 
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,10 +21,21 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
     //конструктор на входе у которого View
     public NoteViewHolder(@NonNull View itemView, NoteAdapter.InteractionListener listener) {
         super(itemView);
+        initViews();
 
+//        noteEntity = new NoteRepoImpl().getNotes();
         //обработка нажатия на item
         itemView.setOnClickListener(v -> {
             listener.onItemClickListener(noteEntity);
         });
+    }
+
+    private void initViews() {
+        noteEntity = new NoteEntity(
+                1,
+                "Repo 1",
+                "Неправильный 1",
+                Color.BLACK
+        );
     }
 }

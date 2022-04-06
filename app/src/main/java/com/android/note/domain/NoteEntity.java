@@ -27,6 +27,11 @@ public class NoteEntity {
         this.color = color;
     }
 
+    public NoteEntity(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
     public int getId() {
         return id;
     }
