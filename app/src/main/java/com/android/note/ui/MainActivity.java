@@ -50,20 +50,13 @@ public class MainActivity extends AppCompatActivity {
                     + noteEntity.getContent();
             Toast.makeText(MainActivity.this, sb, Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-
-            intent.putExtra(SecondActivity.TITLE_OUT_EXTRA_KEY, noteEntity.getTitle());
-            intent.putExtra(SecondActivity.CONTENT_OUT_EXTRA_KEY, noteEntity.getContent());
-
+            Intent intent = SecondActivity.getLaunchIntent
+                    (
+                            MainActivity.this,
+                            noteEntity.getTitle(),
+                            noteEntity.getContent()
+                    );
             startActivity(intent);
-
-//            Intent intent1 = SecondActivity.getLaunchIntent
-//                    (
-//                            MainActivity.this,
-//                            SecondActivity.TITLE_OUT_EXTRA_KEY,
-//                            SecondActivity.CONTENT_OUT_EXTRA_KEY
-//                    );
-//            secondActivityLauncher.launch ( intent1 );
         }
     };
 

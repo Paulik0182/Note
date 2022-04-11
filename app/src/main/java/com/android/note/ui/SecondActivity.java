@@ -56,7 +56,6 @@ public class SecondActivity extends AppCompatActivity {
         intent.putExtra(TITLE_OUT_EXTRA_KEY, title );
         intent.putExtra(CONTENT_OUT_EXTRA_KEY, content);
 
-        context.startActivity(intent);
         return intent;
     }
     private void setListeners() {
