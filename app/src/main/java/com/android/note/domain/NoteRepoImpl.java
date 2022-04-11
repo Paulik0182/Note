@@ -73,4 +73,26 @@ public class NoteRepoImpl implements NoteRepo {
     public int createRandomId() {
         return counter++;
     }
+
+    @Override
+    public void update(NoteEntity changedNote) {
+        int id = changedNote.getId();//это id который мы хотим изменить
+
+        //поиск старой заметки
+        NoteEntity oldNote = null;
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getId() == id) {//находим нужный id
+                oldNote = data.get(i);//получаем нужный элемент
+                break;
+            }
+        }
+        if (oldNote == null) {//если не нашли заметку, то добавляем заметку
+            addNote(changedNote);
+        } else {
+            //если заметка существует, то меняем в ней setTitle, setContent, setColor
+            oldNote.setTitle(changedNote.getTitle());
+            oldNote.setContent(changedNote.getContent());
+            oldNote.setColor(changedNote.getColor());
+        }
+    }
 }

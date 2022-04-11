@@ -26,4 +26,6 @@ public interface NoteRepo {
     void deleteAll();//удалить все заметки
 
     int createRandomId();
+
+    void update(NoteEntity changedNote);
 }

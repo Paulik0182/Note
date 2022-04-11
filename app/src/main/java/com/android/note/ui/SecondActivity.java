@@ -100,8 +100,7 @@ public class SecondActivity extends AppCompatActivity {
 
                     NoteRepo noteRepo = getApp().getNoteRepo();//достали репозеторий
 
-                    noteRepo.deleteNoteById(changedNote.getId());//удаляем старые данные по id
-                    noteRepo.addNote(changedNote);//добавляем новые данные
+                    noteRepo.update(changedNote);//добавляем новые данные
 
                     setResult(RESULT_OK);//для обновления списка на первом окне отправляем результат
                     break;
