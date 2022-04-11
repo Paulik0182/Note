@@ -1,23 +1,18 @@
 package com.android.note.domain;
+
 /**
-Данный класс для сущностей.
- здесь заводим поля - объекты (делаем структуру сущности). Все объекты (поля) private,
- далее создаем для каждого объекта get и set это для того что-бы была возможность контролировать
- запись, чтение объекта (поля - переменные).
+ * Данный класс для сущностей.
+ * здесь заводим поля - объекты (делаем структуру сущности). Все объекты (поля) private,
+ * далее создаем для каждого объекта get и set это для того что-бы была возможность контролировать
+ * запись, чтение объекта (поля - переменные).
  */
 
 public class NoteEntity {
 
-    private int id; // setId(int id) не делаем
+    private final int id; // setId(int id) не делаем
     private String title;
     private String content;
     private int color;
-
-
-    //конструктор только для id
-    public NoteEntity(int id) {
-        this.id = id;
-    }
 
     //конструктор принимает все параметры (можно делать много конструкторов с разным набором полей)
     public NoteEntity(int id, String title, String content, int color) {
@@ -27,16 +22,11 @@ public class NoteEntity {
         this.color = color;
     }
 
-    public NoteEntity(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
-
     public int getId() {
         return id;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return title;
     }
 

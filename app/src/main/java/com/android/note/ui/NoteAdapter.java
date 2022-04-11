@@ -61,7 +61,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     }
 
     //завели метод чтобы передать заметки в адаптер
-    public void setData(List<NoteEntity> notes){
+    public void setData(List<NoteEntity> notes) {
         data = notes;
         notifyDataSetChanged();//обновляет данные
     }
@@ -75,7 +75,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
      * Обеспечивается единообразная работа с разными источниками данных.
      */
 
-    public interface InteractionListener{
-        void  onItemClickListener(NoteEntity noteEntity);
+    public interface InteractionListener {
+        void onItemClickListener(NoteEntity noteEntity);
     }
 }

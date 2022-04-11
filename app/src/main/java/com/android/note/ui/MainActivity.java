@@ -1,14 +1,9 @@
 package com.android.note.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,15 +15,10 @@ import com.android.note.domain.NoteEntity;
 import com.android.note.domain.NoteRepo;
 import com.android.note.domain.NoteRepoImpl;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TITLE_SAVE_OUT_EXTRA_KEY = "title_save_out_extra_key";
-    private static final String DETAIL_SAVE_OUT_EXTRA_KEY = "detail_save_out_extra_key";
     private static final int NOTE_REQUEST_CODE = 100;
     //создали список сущностей
-//    private List<NoteEntity> noteEntityList = new LinkedList<>();
 
     //создаем репозиторий (хранилище), указываем релиазацию хранилища.
     //для создания лучше использовать класс App
@@ -38,11 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private NoteRepo noteRepo;
     private RecyclerView recyclerView;
     private NoteAdapter adapter;
-    private ActivityResultLauncher<Intent> secondActivityLauncher;
-
-    String receiveTitleMainActivity = null;
-    String receiveContentMainActivity = null;
-
 
     private final NoteAdapter.InteractionListener listener = new NoteAdapter.InteractionListener() {
         @Override
@@ -79,34 +64,10 @@ public class MainActivity extends AppCompatActivity {
         initViews();
 
         //достаем репозиторий из application (класс App)
-//        noteRepo = ((App) getApplication()).getNoteRepo();//вариант написания 1
         noteRepo = getAdd().getNoteRepo();//вариант написания 2 (более читаемый код)
 
-        //достаем данные из репозитория
-        List<NoteEntity> notes = noteRepo.getNotes();
         //Кладем данные в адаптер
         adapter.setData(noteRepo.getNotes());
-
-//        Intent intent = getIntent ();
-//        receiveTitleMainActivity = intent.getStringExtra ( TITLE_SAVE_OUT_EXTRA_KEY );
-//        receiveContentMainActivity = intent.getStringExtra ( DETAIL_SAVE_OUT_EXTRA_KEY );
-//        NoteRepoImpl.data.add ( new NoteEntity ( receiveTitleMainActivity, receiveContentMainActivity ) );//выводим данные
-
-//        getResultLaunchIntent();
-    }
-
-    private void getResultLaunchIntent() {
-        secondActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    Intent data = result.getData();
-                    assert data != null;
-                    receiveTitleMainActivity = data.getStringExtra(SecondActivity.TITLE_OUT_EXTRA_KEY);
-                    receiveContentMainActivity = data.getStringExtra(SecondActivity.CONTENT_OUT_EXTRA_KEY);
-                }
-            }
-        });
     }
 
     private void initViews() {

@@ -17,7 +17,7 @@ public class NoteRepoImpl implements NoteRepo {
     private int counter = 0;
 
     //добавляем данные (создаем список)
-    public NoteRepoImpl(){
+    public NoteRepoImpl() {
         addNote(new NoteEntity(
                 createRandomId(),
                 "Заголовок",
