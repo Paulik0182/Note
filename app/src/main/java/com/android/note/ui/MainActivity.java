@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.note.Add;
+import com.android.note.App;
 import com.android.note.R;
 import com.android.note.domain.NoteEntity;
 import com.android.note.domain.NoteRepo;
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 //    private List<NoteEntity> noteEntityList = new LinkedList<>();
 
     //создаем репозиторий (хранилище), указываем релиазацию хранилища.
-    //для создания лучше использовать класс Add
+    //для создания лучше использовать класс App
 //    private NoteRepo noteRepo = new NoteRepoImpl();
 
     //обращаемся к репозиторию (application)
@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initViews();
 
-        //достаем репозиторий из application (класс Add)
-//        noteRepo = ((Add) getApplication()).getNoteRepo();//вариант написания 1
+        //достаем репозиторий из application (класс App)
+//        noteRepo = ((App) getApplication()).getNoteRepo();//вариант написания 1
         noteRepo = getAdd().getNoteRepo();//вариант написания 2 (более читаемый код)
 
         //достаем данные из репозитория
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    private Add getAdd() {
-        return (Add) getApplication();
+    private App getAdd() {
+        return (App) getApplication();
     }
 }

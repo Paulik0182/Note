@@ -8,8 +8,7 @@ package com.android.note;
  * в manifests.
  * Данный класс для того чтобы воспользоватся application. В данном классе также есть жизненые цыкля.
  * В manifests обязательно необходимо прописать данный класс
- *         android:name=".Add"
- *
+ * android:name=".App"
  */
 
 import android.app.Application;
@@ -17,13 +16,13 @@ import android.app.Application;
 import com.android.note.domain.NoteRepo;
 import com.android.note.domain.NoteRepoImpl;
 
-public class Add extends Application {
+public class App extends Application {
 
     //создаем репозиторий (хранилище), указываем релиазацию хранилища.
-    private NoteRepo noteRepo = new NoteRepoImpl();
+    private final NoteRepo noteRepo = new NoteRepoImpl();
 
     //к данному репозиторию можно братится через этот метод
-    public NoteRepo getNoteRepo(){
+    public NoteRepo getNoteRepo() {
         return noteRepo;
     }
 }

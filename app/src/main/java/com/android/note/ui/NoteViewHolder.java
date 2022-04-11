@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.note.R;
+import com.android.note.domain.NoteEntity;
 
 public class NoteViewHolder extends RecyclerView.ViewHolder {
 
@@ -17,5 +18,13 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
     public NoteViewHolder(@NonNull View itemView) {
         super(itemView);
 
+    }
+
+    public void bind(NoteEntity noteEntity, NoteAdapter.InteractionListener listener) {
+        titleTextView.setText(noteEntity.getTitle());
+        contentTextView.setText(noteEntity.getContent());
+        itemView.setOnClickListener(v -> {
+            listener.onItemClickListener(noteEntity);
+        });
     }
 }

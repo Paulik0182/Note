@@ -51,11 +51,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
 
         final NoteEntity noteEntity = data.get(position);//получили данные. Счетчик - position, счетчик необходим для класса RecyclerView
 
-        holder.titleTextView.setText(noteEntity.getTitle());
-        holder.contentTextView.setText(noteEntity.getContent());
-        holder.itemView.setOnClickListener(v -> {  //сделали коррекцию. реализовали нажатие в данном классе (NoteAdapter), все убрали в NoteViewHolder
-            listener.onItemClickListener(noteEntity);
-        });
+        holder.bind(noteEntity, listener);
     }
 
     //вернуть количество данных
