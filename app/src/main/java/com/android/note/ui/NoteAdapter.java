@@ -22,7 +22,7 @@ import java.util.List;
 public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
 
     private List<NoteEntity> data; //список сущьностей
-    private InteractionListener listener; //слушатель
+    private final InteractionListener listener; //слушатель
 
     //вместе со списком data, передаем объект listener
     public NoteAdapter(List<NoteEntity> data, InteractionListener listener) {
@@ -53,6 +53,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
 
         holder.titleTextView.setText(noteEntity.getTitle());
         holder.contentTextView.setText(noteEntity.getContent());
+        holder.setNoteEntity(noteEntity);//из  NoteViewHolder
     }
 
     //вернуть количество данных

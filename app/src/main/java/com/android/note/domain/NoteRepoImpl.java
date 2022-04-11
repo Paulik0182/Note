@@ -19,25 +19,25 @@ public class NoteRepoImpl implements NoteRepo {
     //добавляем данные (создаем список)
     public NoteRepoImpl(){
         addNote(new NoteEntity(
-                createRandomID(),
+                createRandomId(),
                 "Заголовок",
                 "Привет, Привет",
                 Color.RED
         ));
         addNote(new NoteEntity(
-                createRandomID(),
+                createRandomId(),
                 "Название",
                 "Дорогой дневник",
                 Color.BLUE
         ));
         addNote(new NoteEntity(
-                createRandomID(),
+                createRandomId(),
                 "Hello",
                 "Привет, Привет",
                 Color.YELLOW
         ));
         addNote(new NoteEntity(
-                createRandomID(),
+                createRandomId(),
                 "Заголовок",
                 "Ура",
                 Color.BLACK
@@ -70,7 +70,7 @@ public class NoteRepoImpl implements NoteRepo {
     }
 
     @Override
-    public int createRandomID() {
+    public int createRandomId() {
         return counter++;
     }
 }

@@ -1,5 +1,10 @@
 package com.android.note.ui;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -8,15 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Toast;
-
 import com.android.note.Add;
+import com.android.note.R;
 import com.android.note.domain.NoteEntity;
 import com.android.note.domain.NoteRepo;
-import com.android.note.R;
 import com.android.note.domain.NoteRepoImpl;
 
 import java.util.List;
@@ -50,12 +50,12 @@ public class MainActivity extends AppCompatActivity {
                     + noteEntity.getContent();
             Toast.makeText(MainActivity.this, sb, Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent ( MainActivity.this, SecondActivity.class );
+            Intent intent = new Intent(MainActivity.this, SecondActivity.class);
 
-            intent.putExtra ( SecondActivity.TITLE_OUT_EXTRA_KEY, noteEntity.getTitle() );
-            intent.putExtra ( SecondActivity.CONTENT_OUT_EXTRA_KEY, noteEntity.getContent());
+            intent.putExtra(SecondActivity.TITLE_OUT_EXTRA_KEY, noteEntity.getTitle());
+            intent.putExtra(SecondActivity.CONTENT_OUT_EXTRA_KEY, noteEntity.getContent());
 
-            startActivity ( intent );
+            startActivity(intent);
 
 //            Intent intent1 = SecondActivity.getLaunchIntent
 //                    (
@@ -90,18 +90,18 @@ public class MainActivity extends AppCompatActivity {
 //        getResultLaunchIntent();
     }
 
-    private void getResultLaunchIntent(){
-        secondActivityLauncher = registerForActivityResult ( new ActivityResultContracts.StartActivityForResult (), new ActivityResultCallback<ActivityResult>() {
+    private void getResultLaunchIntent() {
+        secondActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode () == Activity.RESULT_OK) {
-                    Intent data = result.getData ();
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
                     assert data != null;
-                    receiveTitleMainActivity = data.getStringExtra ( SecondActivity.TITLE_OUT_EXTRA_KEY );
-                    receiveContentMainActivity = data.getStringExtra ( SecondActivity.CONTENT_OUT_EXTRA_KEY );
+                    receiveTitleMainActivity = data.getStringExtra(SecondActivity.TITLE_OUT_EXTRA_KEY);
+                    receiveContentMainActivity = data.getStringExtra(SecondActivity.CONTENT_OUT_EXTRA_KEY);
                 }
             }
-        } );
+        });
     }
 
     private void initViews() {
