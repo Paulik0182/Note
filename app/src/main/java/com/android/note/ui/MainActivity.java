@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TITLE_SAVE_OUT_EXTRA_KEY = "title_save_out_extra_key";
     private static final String DETAIL_SAVE_OUT_EXTRA_KEY = "detail_save_out_extra_key";
+    private static final int NOTE_REQUEST_CODE = 100;
     //создали список сущностей
 //    private List<NoteEntity> noteEntityList = new LinkedList<>();
 
@@ -53,12 +55,22 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = SecondActivity.getLaunchIntent
                     (
                             MainActivity.this,
+                            noteEntity.getId(),
                             noteEntity.getTitle(),
-                            noteEntity.getContent()
+                            noteEntity.getContent(),
+                            noteEntity.getColor()
                     );
-            startActivity(intent);
+            startActivityForResult(intent, NOTE_REQUEST_CODE);
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == NOTE_REQUEST_CODE && resultCode == RESULT_OK) {
+            adapter.setData(noteRepo.getNotes());
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

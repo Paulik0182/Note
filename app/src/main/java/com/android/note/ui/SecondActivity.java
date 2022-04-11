@@ -13,12 +13,17 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.note.App;
 import com.android.note.R;
+import com.android.note.domain.NoteEntity;
+import com.android.note.domain.NoteRepo;
 
 public class SecondActivity extends AppCompatActivity {
 
     public static final String TITLE_OUT_EXTRA_KEY = "TITLE_OUT_EXTRA_KEY";
     public static final String CONTENT_OUT_EXTRA_KEY = "CONTENT_OUT_EXTRA_KEY";
+    public static final String ID_OUT_EXTRA_KEY = "ID_OUT_EXTRA_KEY";
+    private static final String COLOR_OUT_EXTRA_KEY = "COLOR_OUT_EXTRA_KEY";
 
     private Button saveButton = null;
     private Button cancelButton = null;
@@ -26,19 +31,25 @@ public class SecondActivity extends AppCompatActivity {
     private EditText headingTitleEt = null;
     private EditText contentEt = null;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
-        initViews();
-        setListeners();
+    private int noteId;
+    private int noteColor;
 
-        Intent intent = getIntent();
-        String title = intent.getStringExtra(TITLE_OUT_EXTRA_KEY);
-        String content = intent.getStringExtra(CONTENT_OUT_EXTRA_KEY);
-        headingTitleEt.setText(title);
-        contentEt.setText(content);
+    //метод для вызова данной активити
+    public static Intent getLaunchIntent(
+            Context context,
+            int id,
+            String title,
+            String content,
+            int color
+    ) {
+        Intent intent = new Intent(context, SecondActivity.class);
 
+        intent.putExtra(ID_OUT_EXTRA_KEY, id);
+        intent.putExtra(TITLE_OUT_EXTRA_KEY, title);
+        intent.putExtra(CONTENT_OUT_EXTRA_KEY, content);
+        intent.putExtra(COLOR_OUT_EXTRA_KEY, color);
+
+        return intent;
     }
 
     private void initViews() {
@@ -49,28 +60,57 @@ public class SecondActivity extends AppCompatActivity {
         contentEt = findViewById(R.id.content_edit_text);
     }
 
-    //метод для вызова данной активити
-    public static Intent getLaunchIntent(Context context, String title, String content) {
-        Intent intent = new Intent(context, SecondActivity.class);
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+        initViews();
+        setListeners();
 
-        intent.putExtra(TITLE_OUT_EXTRA_KEY, title );
-        intent.putExtra(CONTENT_OUT_EXTRA_KEY, content);
+        Intent intent = getIntent();
+        noteId = intent.getIntExtra(ID_OUT_EXTRA_KEY, 0);
+        String title = intent.getStringExtra(TITLE_OUT_EXTRA_KEY);
+        String content = intent.getStringExtra(CONTENT_OUT_EXTRA_KEY);
+        noteColor = intent.getIntExtra(COLOR_OUT_EXTRA_KEY, 0);
+        idTv.setText(String.valueOf(noteId));
+        headingTitleEt.setText(title);
+        contentEt.setText(content);
 
-        return intent;
     }
+
+    private App getApp() {
+        return (App) getApplication();
+    }
+
     private void setListeners() {
         @SuppressLint("NonConstantResourceId") final View.OnClickListener OnClickListener = view -> {
 
             //проверяем нажатие кнопки и устанвливаем цвет экрана
             switch (view.getId()) {
                 case R.id.save_button:
-                    onBackPressed();
+                    String changedTitle = headingTitleEt.getText().toString();//забрали изменение
+                    String changedContent = contentEt.getText().toString();//забрали изменение
+
+                    //собрали новую заметку
+                    NoteEntity changedNote = new NoteEntity(
+                            noteId,
+                            changedTitle,
+                            changedContent,
+                            noteColor);//получаем новые измененные данные. new NoteEntity
+
+                    NoteRepo noteRepo = getApp().getNoteRepo();//достали репозеторий
+
+                    noteRepo.deleteNoteById(changedNote.getId());//удаляем старые данные по id
+                    noteRepo.addNote(changedNote);//добавляем новые данные
+
+                    setResult(RESULT_OK);//для обновления списка на первом окне отправляем результат
                     break;
                 case R.id.cancel_button:
-                    finish();
+                    setResult(RESULT_CANCELED);
                     break;
                 default:
             }
+            finish();
         };
 
         saveButton.setOnClickListener(OnClickListener);
