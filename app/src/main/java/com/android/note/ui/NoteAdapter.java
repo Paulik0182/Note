@@ -37,7 +37,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
         //создаем NoteViewHolder
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate(R.layout.item_note, parent, false);
-        NoteViewHolder viewHolder = new NoteViewHolder(itemView, listener);
+        NoteViewHolder viewHolder = new NoteViewHolder(itemView);
         return viewHolder;
     }
 
@@ -53,7 +53,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
 
         holder.titleTextView.setText(noteEntity.getTitle());
         holder.contentTextView.setText(noteEntity.getContent());
-        holder.setNoteEntity(noteEntity);//из  NoteViewHolder
+        holder.itemView.setOnClickListener(v -> {  //сделали коррекцию. реализовали нажатие в данном классе (NoteAdapter), все убрали в NoteViewHolder
+            listener.onItemClickListener(noteEntity);
+        });
     }
 
     //вернуть количество данных
