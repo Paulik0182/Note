@@ -68,11 +68,10 @@ public class SecondActivity extends AppCompatActivity {
         setListeners();
 
         Intent intent = getIntent();
-        NoteEntity noteEntity = (NoteEntity) intent.getSerializableExtra("Item");
-        noteId = noteEntity.getId();
-        String title = noteEntity.getTitle();
-        String content = noteEntity.getContent();
-        noteColor = noteEntity.getColor();
+        noteId = intent.getIntExtra(ID_OUT_EXTRA_KEY, 0);
+        NoteEntity title = (NoteEntity) intent.getSerializableExtra(TITLE_OUT_EXTRA_KEY);
+        NoteEntity content = (NoteEntity) intent.getSerializableExtra(CONTENT_OUT_EXTRA_KEY);
+        noteColor = intent.getIntExtra(COLOR_OUT_EXTRA_KEY, 0);
         idTv.setText(String.valueOf(noteId));
         headingTitleEt.setText((CharSequence) title);
         contentEt.setText((CharSequence) content);
