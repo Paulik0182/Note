@@ -69,8 +69,8 @@ public class SecondActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         noteId = intent.getIntExtra(ID_OUT_EXTRA_KEY, 0);
-        NoteEntity title = (NoteEntity) intent.getSerializableExtra(TITLE_OUT_EXTRA_KEY);
-        NoteEntity content = (NoteEntity) intent.getSerializableExtra(CONTENT_OUT_EXTRA_KEY);
+        NoteEntity title = (NoteEntity) intent.getParcelableExtra(TITLE_OUT_EXTRA_KEY);
+        NoteEntity content = (NoteEntity) intent.getParcelableExtra(CONTENT_OUT_EXTRA_KEY);
         noteColor = intent.getIntExtra(COLOR_OUT_EXTRA_KEY, 0);
         idTv.setText(String.valueOf(noteId));
         headingTitleEt.setText((CharSequence) title);

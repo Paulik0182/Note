@@ -1,6 +1,7 @@
 package com.android.note.domain;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Данный класс для сущностей.
@@ -9,7 +10,7 @@ import java.io.Serializable;
  * запись, чтение объекта (поля - переменные).
  */
 
-public class NoteEntity implements Serializable {
+public class NoteEntity implements Parcelable {
 
     private final int id; // setId(int id) не делаем
     private String title;
@@ -22,6 +23,38 @@ public class NoteEntity implements Serializable {
         this.title = title;
         this.content = content;
         this.color = color;
+    }
+
+    public static final Creator<NoteEntity> CREATOR = new Creator<NoteEntity>() {
+        @Override
+        public NoteEntity createFromParcel(Parcel in) {
+            return new NoteEntity(in);
+        }
+
+        @Override
+        public NoteEntity[] newArray(int size) {
+            return new NoteEntity[size];
+        }
+    };
+
+    protected NoteEntity(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        content = in.readString();
+        color = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(title);
+        dest.writeString(content);
+        dest.writeInt(color);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public int getId() {
