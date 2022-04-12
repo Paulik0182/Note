@@ -1,5 +1,7 @@
 package com.android.note.domain;
 
+import java.io.Serializable;
+
 /**
  * Данный класс для сущностей.
  * здесь заводим поля - объекты (делаем структуру сущности). Все объекты (поля) private,
@@ -7,7 +9,7 @@ package com.android.note.domain;
  * запись, чтение объекта (поля - переменные).
  */
 
-public class NoteEntity {
+public class NoteEntity implements Serializable {
 
     private final int id; // setId(int id) не делаем
     private String title;
