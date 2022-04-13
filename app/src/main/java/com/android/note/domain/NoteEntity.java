@@ -37,6 +37,7 @@ public class NoteEntity implements Parcelable {
         }
     };
 
+    //конструктор по умолчанию который на вход принимает Parcel
     protected NoteEntity(Parcel in) {
         id = in.readInt();
         title = in.readString();
