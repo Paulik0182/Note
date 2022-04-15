@@ -24,6 +24,7 @@ public class SecondActivity extends AppCompatActivity {
     public static final String CONTENT_OUT_EXTRA_KEY = "CONTENT_OUT_EXTRA_KEY";
     public static final String ID_OUT_EXTRA_KEY = "ID_OUT_EXTRA_KEY";
     private static final String COLOR_OUT_EXTRA_KEY = "COLOR_OUT_EXTRA_KEY";
+    private static final String DATA_EXTRA_KEY = "DATA_EXTRA_KEY";
 
     private Button saveButton = null;
     private Button cancelButton = null;
@@ -33,6 +34,7 @@ public class SecondActivity extends AppCompatActivity {
 
     private int noteId;
     private int noteColor;
+
 
     //метод для вызова данной активити
     public static Intent getLaunchIntent(
@@ -44,10 +46,7 @@ public class SecondActivity extends AppCompatActivity {
     ) {
         Intent intent = new Intent(context, SecondActivity.class);
 
-        intent.putExtra(ID_OUT_EXTRA_KEY, id);
-        intent.putExtra(TITLE_OUT_EXTRA_KEY, title);
-        intent.putExtra(CONTENT_OUT_EXTRA_KEY, content);
-        intent.putExtra(COLOR_OUT_EXTRA_KEY, color);
+        intent.getParcelableExtra(DATA_EXTRA_KEY);
 
         return intent;
     }
@@ -68,7 +67,7 @@ public class SecondActivity extends AppCompatActivity {
         setListeners();
 
         Intent intent = getIntent();
-        NoteEntity noteEntity = intent.getParcelableExtra("Item");
+        NoteEntity noteEntity = intent.getParcelableExtra(DATA_EXTRA_KEY);
         noteId = noteEntity.getId();
         String title = noteEntity.getTitle();
         String content = noteEntity.getContent();
