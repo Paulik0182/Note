@@ -40,10 +40,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = SecondActivity.getLaunchIntent
                     (
                             MainActivity.this,
-                            noteEntity.getId(),
-                            noteEntity.getTitle(),
-                            noteEntity.getContent(),
-                            noteEntity.getColor()
+                            noteEntity
                     );
             startActivityForResult(intent, NOTE_REQUEST_CODE);
         }

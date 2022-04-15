@@ -25,6 +25,7 @@ public class SecondActivity extends AppCompatActivity {
     public static final String ID_OUT_EXTRA_KEY = "ID_OUT_EXTRA_KEY";
     private static final String COLOR_OUT_EXTRA_KEY = "COLOR_OUT_EXTRA_KEY";
     private static final String DATA_EXTRA_KEY = "DATA_EXTRA_KEY";
+    private static final String NOTE_ENTITY_EXTRA_KEY = "NOTE_ENTITY_EXTRA_KEY";
 
     private Button saveButton = null;
     private Button cancelButton = null;
@@ -39,14 +40,11 @@ public class SecondActivity extends AppCompatActivity {
     //метод для вызова данной активити
     public static Intent getLaunchIntent(
             Context context,
-            int id,
-            String title,
-            String content,
-            int color
+            NoteEntity noteEntity
     ) {
         Intent intent = new Intent(context, SecondActivity.class);
 
-        intent.getParcelableExtra(DATA_EXTRA_KEY);
+        intent.putExtra(NOTE_ENTITY_EXTRA_KEY, noteEntity);
 
         return intent;
     }
@@ -67,23 +65,10 @@ public class SecondActivity extends AppCompatActivity {
         setListeners();
 
         Intent intent = getIntent();
-        NoteEntity noteEntity = intent.getParcelableExtra(DATA_EXTRA_KEY);
-        noteId = noteEntity.getId();
-        String title = noteEntity.getTitle();
-        String content = noteEntity.getContent();
-        noteColor = noteEntity.getColor();
-        idTv.setText(String.valueOf(noteId));
-        headingTitleEt.setText((CharSequence) title);
-        contentEt.setText((CharSequence) content);
-
-//        Intent intent = getIntent();
-//        noteId = intent.getIntExtra(ID_OUT_EXTRA_KEY, 0);
-//        NoteEntity title = (NoteEntity) intent.getParcelableExtra(TITLE_OUT_EXTRA_KEY);
-//        NoteEntity content = (NoteEntity) intent.getParcelableExtra(CONTENT_OUT_EXTRA_KEY);
-//        noteColor = intent.getIntExtra(COLOR_OUT_EXTRA_KEY, 0);
-//        idTv.setText(String.valueOf(noteId));
-//        headingTitleEt.setText((CharSequence) title);
-//        contentEt.setText((CharSequence) content);
+        NoteEntity noteEntity = intent.getParcelableExtra(NOTE_ENTITY_EXTRA_KEY);
+        idTv.setText(String.valueOf(noteEntity.getId()));
+        headingTitleEt.setText(noteEntity.getTitle());
+        contentEt.setText(noteEntity.getContent());
 
     }
 
