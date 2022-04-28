@@ -1,6 +1,9 @@
-package com.android.note.domain;
+package com.android.note.data;
 
 import android.graphics.Color;
+
+import com.android.note.domain.NoteEntity;
+import com.android.note.domain.NoteRepo;
 
 import java.util.ArrayList;
 import java.util.List;

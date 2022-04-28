@@ -69,6 +69,8 @@ public class SecondActivity extends AppCompatActivity {
         idTv.setText(String.valueOf(noteEntity.getId()));
         headingTitleEt.setText(noteEntity.getTitle());
         contentEt.setText(noteEntity.getContent());
+        noteId = noteEntity.getId();//запомнили значение
+        noteColor = noteEntity.getColor();
 
     }
 

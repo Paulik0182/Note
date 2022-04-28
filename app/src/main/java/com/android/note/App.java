@@ -13,8 +13,8 @@ package com.android.note;
 
 import android.app.Application;
 
+import com.android.note.data.NoteRepoImpl;
 import com.android.note.domain.NoteRepo;
-import com.android.note.domain.NoteRepoImpl;
 
 public class App extends Application {
 

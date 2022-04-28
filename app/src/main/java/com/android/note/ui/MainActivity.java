@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.note.App;
 import com.android.note.R;
+import com.android.note.data.NoteRepoImpl;
 import com.android.note.domain.NoteEntity;
 import com.android.note.domain.NoteRepo;
-import com.android.note.domain.NoteRepoImpl;
 
 public class MainActivity extends AppCompatActivity {
 
