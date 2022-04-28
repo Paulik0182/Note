@@ -11,6 +11,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Note">
         <activity
+            android:name=".ui.RootActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ui.SecondActivity"
             android:exported="false" />
         <activity
