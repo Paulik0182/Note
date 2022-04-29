@@ -14,7 +14,7 @@ public class RootActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_root);
 
-        Fragment noteListFragment = new NotListFragment(); //создали фрагмент
+        Fragment noteListFragment = new NoteListFragment(); //создали фрагмент
         getSupportFragmentManager()
                 .beginTransaction() //начать транзакцию
                 .add(R.id.container_layout, noteListFragment) //здесь мы укакзываем в какой layout мы вставляем фрагмент
