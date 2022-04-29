@@ -102,6 +102,10 @@ public class NoteListFragment extends Fragment {
         // отнаследоватся от интерфейса (implements NoteListFragment.Controller).
     }
 
+    public void onDataChanged() {
+        adapter.setData(noteRepo.getNotes());//данные изменились, вставили их в адаптер
+    }
+
     //сам контроллер. указываем метод через который вызываем фрагмент (фрагмент с деталями  замиси)
     //обязательно нужно в активити имплементировать (наследоватся от) интерфейс
     interface Controller {

@@ -18,7 +18,7 @@ public class RootActivity extends AppCompatActivity implements NoteListFragment.
         Fragment noteListFragment = new NoteListFragment(); //создали фрагмент
         getSupportFragmentManager()
                 .beginTransaction() //начать транзакцию
-                .add(R.id.container_layout, noteListFragment) //здесь мы укакзываем в какой layout мы вставляем фрагмент
+                .add(R.id.container_layout, noteListFragment, "P") //здесь мы укакзываем в какой layout мы вставляем фрагмент
                 .commit(); //закончить транзакцию
     }
 
@@ -38,7 +38,10 @@ public class RootActivity extends AppCompatActivity implements NoteListFragment.
 
     @Override
     public void onDataChanged() {
-
+        NoteListFragment fragment = (NoteListFragment) getSupportFragmentManager().findFragmentByTag("P");// находим нужный фрагмент
+        if (fragment != null) {
+            fragment.onDataChanged();//если изменили передаем данные обратно
+        }
     }
 
     @Override
