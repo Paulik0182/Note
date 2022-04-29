@@ -1,5 +1,6 @@
 package com.android.note.ui;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ public class NoteListFragment extends Fragment {
                     + noteEntity.getContent();
             Toast.makeText(getContext(), sb, Toast.LENGTH_SHORT).show();
 
+            showNoteScreen(noteEntity);// открывам отдельный экран отдельной заметки. noteEntity - конкретно какую заметку передаем
         }
     };
     private NoteRepo noteRepo; //чтобы данные взять
@@ -71,5 +73,38 @@ public class NoteListFragment extends Fragment {
     private App getAdd() {
         return (App) getActivity().getApplication(); // вариант написания 1
 //        return (App) getContext().getApplicationContext(); // вариант написания 2
+    }
+
+
+    //метод для открытия отдельной заметки
+    private void showNoteScreen(NoteEntity noteEntity) {
+        getController().showNoteScreen(noteEntity);
+        //для того чтобы фрагмент знал что-то об активети,
+        // лучше всего сделать связь (взаимодействие) через интерфейс,
+        // в этом случае фрагмент напрямую не будет обращатся к активити,
+        // все взаимодействие будет через интерфейс
+    }
+
+    //взаимодействие активити и фрагмента через контроллер
+    private Controller getController() {
+        return (Controller) getActivity();
+    }
+
+    //это метод сработывает в момент присоединения фрагмента к активити
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        getController();
+
+        //этот метод с вызовом метода getController() своего рода костыль.
+        // Он нам позволит свольть приложение раньше чем откроится фрагмент.
+        // Приложение свалится если мы забудим в классе RootActivity
+        // отнаследоватся от интерфейса (implements NoteListFragment.Controller).
+    }
+
+    //сам контроллер. указываем метод через который вызываем фрагмент (фрагмент с деталями  замиси)
+    //обязательно нужно в активити имплементировать (наследоватся от) интерфейс
+    interface Controller {
+        void showNoteScreen(NoteEntity noteEntity);
     }
 }
