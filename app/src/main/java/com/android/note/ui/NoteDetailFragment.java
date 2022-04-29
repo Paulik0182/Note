@@ -25,7 +25,9 @@ import com.android.note.domain.NoteRepo;
 
 public class NoteDetailFragment extends Fragment {
 
-    private final NoteEntity noteEntity;
+    private static final String NOTE_ENTITY_KEY = "NOTE_ENTITY_KEY";
+    private NoteEntity noteEntity;
+
     private Button saveButton = null;
     private Button cancelButton = null;
     private TextView idTv = null;
@@ -34,8 +36,37 @@ public class NoteDetailFragment extends Fragment {
     private int noteId;
     private int noteColor;
 
-    public NoteDetailFragment(NoteEntity noteEntity) {
-        this.noteEntity = noteEntity;
+    //!!!!Вариант 1 !!!!
+//    public NoteDetailFragment(NoteEntity noteEntity) {
+    /**
+     * Arguments - это своего рода костыль придуманный разработчиками
+     * в основном для поворота экрана, это на подобии Bundle (корзины. ключ - значение)
+     * !!сюда можно положить маленькие данные!!
+     */
+//        Bundle args = new Bundle();
+//        args.putParcelable(NOTE_ENTITY_KEY, noteEntity);
+//        setArguments(args);
+//    }
+
+    /**
+     * в связи с тем, что при повороте экрана активити пересоздаются,
+     * а фрагменты мы создали сами, соответственно автоматически фрагменты
+     * не могут создаться, не чего не известно noteEntity
+     * поэтому необходим пустой конструктор
+     * <p>
+     * обязательно должен быть public
+     */
+    public NoteDetailFragment() {
+    }
+
+    //!!!!Вариант 2 !!!! - наиболее предпочтительно
+    static NoteDetailFragment newInstance(NoteEntity noteEntity) {
+        Bundle args = new Bundle();
+        args.putParcelable(NOTE_ENTITY_KEY, noteEntity);
+
+        NoteDetailFragment fragment = new NoteDetailFragment();// отдельно создаем фрагмент
+        fragment.setArguments(args);// кладем во фрагмент аргументы
+        return fragment;
     }
 
     private void setNoteEntity(NoteEntity noteEntity) {
@@ -57,6 +88,8 @@ public class NoteDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
         setListeners();
+
+        noteEntity = getArguments().getParcelable(NOTE_ENTITY_KEY);
         setNoteEntity(noteEntity);
     }
 

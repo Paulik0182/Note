@@ -24,7 +24,7 @@ public class RootActivity extends AppCompatActivity implements NoteListFragment.
 
     @Override
     public void showNoteScreen(NoteEntity noteEntity) {
-        Fragment noteDetailFragment = new NoteDetailFragment(noteEntity); //создали фрагмент
+        Fragment noteDetailFragment = NoteDetailFragment.newInstance(noteEntity); //создали фрагмент
         getSupportFragmentManager()
                 .beginTransaction() //начать транзакцию
 
