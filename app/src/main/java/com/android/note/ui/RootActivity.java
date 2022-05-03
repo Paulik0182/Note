@@ -11,7 +11,7 @@ import com.android.note.domain.NoteEntity;
 public class RootActivity extends AppCompatActivity implements NoteListFragment.Controller, NoteDetailFragment.Controller {
 
     private static final String TAG_MAIN_CONTAINER_LAYOUT_KEY = "TAG_MAIN_CONTAINER_LAYOUT_KEY";
-    private static final String TAG_DETAIL_CONTAINER_LAYOUT_KEY = "TAG_MAIN_CONTAINER_LAYOUT_KEY";
+    private static final String TAG_DETAIL_CONTAINER_LAYOUT_KEY = "TAG_DETAIL_CONTAINER_LAYOUT_KEY";
 
 
     @Override
@@ -34,7 +34,7 @@ public class RootActivity extends AppCompatActivity implements NoteListFragment.
 
                 //здесь мы укакзываем в какой layout мы вставляем фрагмент
                 // (внимание! в данном случае у нас уже есть один фрагмент, этот фрагмент будет раздут повех первого фрагмента).
-                .add(R.id.detail_container_layout, noteDetailFragment, "TAG_DETAIL_CONTAINER_LAYOUT_KEY")  //добавляем тэг (teg - )
+                .add(R.id.detail_container_layout, noteDetailFragment, TAG_DETAIL_CONTAINER_LAYOUT_KEY)  //добавляем тэг (teg - )
                 .addToBackStack(null)//это список операций по нажатию кнопки назад. Если добавление фрагмента в данной транзакией, значит он его удалит.
 
                 .commit(); //закончить транзакцию
@@ -50,7 +50,7 @@ public class RootActivity extends AppCompatActivity implements NoteListFragment.
 
     @Override
     public void finishNoteDetailFragment() {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag("TAG_DETAIL_CONTAINER_LAYOUT_KEY");
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_DETAIL_CONTAINER_LAYOUT_KEY);
         if (fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
