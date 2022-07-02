@@ -1,8 +1,8 @@
 package com.android.note.domain
 
-import android.os.Parcel
+import android.graphics.Color
 import android.os.Parcelable
-import android.os.Parcelable.Creator
+import kotlinx.android.parcel.Parcelize
 
 /**
  * Данный класс для сущностей.
@@ -10,51 +10,37 @@ import android.os.Parcelable.Creator
  * далее создаем для каждого объекта get и set это для того что-бы была возможность контролировать
  * запись, чтение объекта (поля - переменные).
  */
-class NoteEntity : Parcelable {
-    val id // setId(int id) не делаем
-            : Int
 
-    //если private то значение изменить нельзя, можно только получать зачение объекта
-    var title: String?
-    var content: String?
-    var color: Int
+@Parcelize
+data class NoteEntity(
+    val id: Int,
+    var title: String,
+    var content: String,
+    var color: Int? = null//такое написание делает переменную (поле) не обязательной для заполнения (написания)
+) : Parcelable
 
-    //конструктор принимает все параметры (можно делать много конструкторов с разным набором полей)
-    constructor(id: Int, title: String?, content: String?, color: Int) {
-        this.id = id
-        this.title = title
-        this.content = content
-        this.color = color
-    }
+fun ololo() {
+    val note = NoteEntity(1, "", "", Color.GRAY)
+    note.content
+}
 
-    //конструктор по умолчанию который на вход принимает Parcel
-    protected constructor(`in`: Parcel) {
-        id = `in`.readInt()
-        title = `in`.readString()
-        content = `in`.readString()
-        color = `in`.readInt()
-    }
+//аргументы можно менять местами если их поименовать. Например
+fun ololo2() {
+    val note = NoteEntity(
+        1,
+        content = "",
+        title = ""
+    )
+    note.content
+}
 
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeInt(id)
-        dest.writeString(title)
-        dest.writeString(content)
-        dest.writeInt(color)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object {
-        val CREATOR: Creator<NoteEntity> = object : Creator<NoteEntity?> {
-            override fun createFromParcel(`in`: Parcel): NoteEntity? {
-                return NoteEntity(`in`)
-            }
-
-            override fun newArray(size: Int): Array<NoteEntity?> {
-                return arrayOfNulls(size)
-            }
-        }
-    }
+//У data class есть иквелс сравнение, автоматтически генерится хеш код
+fun ololo3() {
+    val note = NoteEntity(
+        1,
+        content = "",
+        title = ""
+    )
+    val note4 =
+        note.copy(title = "Привет")// создали копию объекта и изменили одну переменную, все остальное остается прежним
 }
