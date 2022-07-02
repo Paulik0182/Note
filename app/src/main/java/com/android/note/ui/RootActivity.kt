@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment
 import com.android.note.R
 import com.android.note.domain.NoteEntity
 
+private const val TAG_MAIN_CONTAINER_LAYOUT_KEY = "TAG_MAIN_CONTAINER_LAYOUT_KEY"
+private const val TAG_DETAIL_CONTAINER_LAYOUT_KEY = "TAG_DETAIL_CONTAINER_LAYOUT_KEY"
+
 class RootActivity : AppCompatActivity(), NoteListFragment.Controller,
     NoteDetailFragment.Controller {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,10 +55,5 @@ class RootActivity : AppCompatActivity(), NoteListFragment.Controller,
                 .remove(fragment) // удалить самого себя
                 .commit()
         }
-    }
-
-    companion object {
-        private const val TAG_MAIN_CONTAINER_LAYOUT_KEY = "TAG_MAIN_CONTAINER_LAYOUT_KEY"
-        private const val TAG_DETAIL_CONTAINER_LAYOUT_KEY = "TAG_DETAIL_CONTAINER_LAYOUT_KEY"
     }
 }
