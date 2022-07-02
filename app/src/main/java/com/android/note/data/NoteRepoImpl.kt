@@ -1,101 +1,100 @@
-package com.android.note.data;
+package com.android.note.data
 
-import android.graphics.Color;
-
-import com.android.note.domain.NoteEntity;
-import com.android.note.domain.NoteRepo;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.graphics.Color
+import com.android.note.domain.NoteEntity
+import com.android.note.domain.NoteRepo
 
 /**
  * этот клас для реализации интерфейса (NoteRepo)
  * здесь реализуем методы которые указаны в NoteRepo
  */
-public class NoteRepoImpl implements NoteRepo {
+class NoteRepoImpl : NoteRepo {
+    private var counter = 0
+    override fun addNote(noteEntity: NoteEntity) {
+        data.add(noteEntity) //добавляем заметку в список
+    }
 
-    //заводим массив сущьности (хранилище заметок на основе массива)
-    public static List<NoteEntity> data = new ArrayList<>();
+    override fun getNotes(): List<NoteEntity?> {
+        return ArrayList(data) //отдаем копию списка, копию коллекции (лучше отдавать копию чтобы никто не повредил оригинальные данные)
+    }
 
-    private int counter = 0;
+    override fun deleteNoteById(id: Int) {
+        for (i in data.indices) {
+            if (data[i]!!.id == id) {
+                data.removeAt(i)
+                break
+            }
+        }
+    }
+
+    override fun deleteAll() {
+        data.clear()
+    }
+
+    override fun createRandomId(): Int {
+        return counter++
+    }
+
+    override fun update(changedNote: NoteEntity?) {
+        val id = changedNote!!.id //это id который мы хотим изменить
+
+        //поиск старой заметки
+        var oldNote: NoteEntity? = null
+        for (i in data.indices) {
+            if (data[i]!!.id == id) { //находим нужный id
+                oldNote = data[i] //получаем нужный элемент
+                break
+            }
+        }
+        if (oldNote == null) { //если не нашли заметку, то добавляем заметку
+            addNote(changedNote)
+        } else {
+            //если заметка существует, то меняем в ней setTitle, setContent, setColor
+            oldNote.title = changedNote.title
+            oldNote.content = changedNote.content
+            oldNote.color = changedNote.color
+        }
+    }
+
+    companion object {
+        //заводим массив сущьности (хранилище заметок на основе массива)
+        @JvmField
+        var data: MutableList<NoteEntity?> = ArrayList()
+    }
 
     //добавляем данные (создаем список)
-    public NoteRepoImpl() {
-        addNote(new NoteEntity(
+    init {
+        addNote(
+            NoteEntity(
                 createRandomId(),
                 "Заголовок",
                 "Привет, Привет",
                 Color.RED
-        ));
-        addNote(new NoteEntity(
+            )
+        )
+        addNote(
+            NoteEntity(
                 createRandomId(),
                 "Название",
                 "Дорогой дневник",
                 Color.BLUE
-        ));
-        addNote(new NoteEntity(
+            )
+        )
+        addNote(
+            NoteEntity(
                 createRandomId(),
                 "Hello",
                 "Привет, Привет",
                 Color.YELLOW
-        ));
-        addNote(new NoteEntity(
+            )
+        )
+        addNote(
+            NoteEntity(
                 createRandomId(),
                 "Заголовок",
                 "Ура",
                 Color.BLACK
-        ));
-    }
-
-    @Override
-    public void addNote(NoteEntity noteEntity) {
-        data.add(noteEntity);//добавляем заметку в список
-    }
-
-    @Override
-    public List<NoteEntity> getNotes() {
-        return new ArrayList<>(data);//отдаем копию списка, копию коллекции (лучше отдавать копию чтобы никто не повредил оригинальные данные)
-    }
-
-    @Override
-    public void deleteNoteById(int id) {
-        for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).getId() == id) {
-                data.remove(i);
-                break;
-            }
-        }
-    }
-
-    @Override
-    public void deleteAll() {
-        data.clear();
-    }
-
-    @Override
-    public int createRandomId() {
-        return counter++;
-    }
-
-    @Override
-    public void update(NoteEntity changedNote) {
-        int id = changedNote.getId();//это id который мы хотим изменить
-
-        //поиск старой заметки
-        NoteEntity oldNote = null;
-        for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).getId() == id) {//находим нужный id
-                oldNote = data.get(i);//получаем нужный элемент
-                break;
-            }
-        }
-        if (oldNote == null) {//если не нашли заметку, то добавляем заметку
-            addNote(changedNote);
-        } else {
-            //если заметка существует, то меняем в ней setTitle, setContent, setColor
-            oldNote.setTitle(changedNote.getTitle());
-            oldNote.setContent(changedNote.getContent());
-            oldNote.setColor(changedNote.getColor());
-        }
+            )
+        )
     }
 }
