@@ -14,10 +14,10 @@ package com.android.note.domain
  */
 interface NoteRepo {
     //Интерфейсы взаимодействия
-    fun addNote(noteEntity: NoteEntity?) // добавить заметку
+    fun addNote(noteEntity: NoteEntity) // добавить заметку
 
     //получить список всех заметок (чтение)
-    val notes: List<NoteEntity?>?
+    fun getNotes(): List<NoteEntity?>//это именно функция которая взвращает список всех сущьностей.
     fun deleteNoteById(id: Int) //удалить заметку по ее id
     fun deleteAll() //удалить все заметки
     fun createRandomId(): Int
