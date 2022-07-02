@@ -1,4 +1,9 @@
-package com.android.note;
+package com.android.note
+
+import android.app.Application
+import com.android.note.data.NoteRepoImpl
+import com.android.note.domain.NoteRepo
+
 /**
  * Репозиторий должен быть в единственном экземпляре, не должно быть создания в каждой новой активити,
  * при открытии фрагмета, при повороте экрана и т.д.
@@ -10,19 +15,6 @@ package com.android.note;
  * В manifests обязательно необходимо прописать данный класс
  * android:name=".App"
  */
-
-import android.app.Application;
-
-import com.android.note.data.NoteRepoImpl;
-import com.android.note.domain.NoteRepo;
-
-public class App extends Application {
-
-    //создаем репозиторий (хранилище), указываем релиазацию хранилища.
-    private final NoteRepo noteRepo = new NoteRepoImpl();
-
-    //к данному репозиторию можно братится через этот метод
-    public NoteRepo getNoteRepo() {
-        return noteRepo;
-    }
+class App : Application() {
+    val noteRepo: NoteRepo = NoteRepoImpl()
 }
