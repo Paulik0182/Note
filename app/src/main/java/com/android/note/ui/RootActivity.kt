@@ -1,61 +1,61 @@
-package com.android.note.ui;
+package com.android.note.ui
 
-import android.os.Bundle;
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.android.note.R
+import com.android.note.domain.NoteEntity
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-import com.android.note.R;
-import com.android.note.domain.NoteEntity;
-
-public class RootActivity extends AppCompatActivity implements NoteListFragment.Controller, NoteDetailFragment.Controller {
-
-    private static final String TAG_MAIN_CONTAINER_LAYOUT_KEY = "TAG_MAIN_CONTAINER_LAYOUT_KEY";
-    private static final String TAG_DETAIL_CONTAINER_LAYOUT_KEY = "TAG_DETAIL_CONTAINER_LAYOUT_KEY";
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_root);
-
-        Fragment noteListFragment = new NoteListFragment(); //создали фрагмент
-        getSupportFragmentManager()
-                .beginTransaction() //начать транзакцию
-                .add(R.id.main_container_layout, noteListFragment, TAG_MAIN_CONTAINER_LAYOUT_KEY) //здесь мы укакзываем в какой layout мы вставляем фрагмент
-                .commit(); //закончить транзакцию
+class RootActivity : AppCompatActivity(), NoteListFragment.Controller,
+    NoteDetailFragment.Controller {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_root)
+        val noteListFragment: Fragment = NoteListFragment() //создали фрагмент
+        supportFragmentManager
+            .beginTransaction() //начать транзакцию
+            .add(
+                R.id.main_container_layout,
+                noteListFragment,
+                TAG_MAIN_CONTAINER_LAYOUT_KEY
+            ) //здесь мы укакзываем в какой layout мы вставляем фрагмент
+            .commit() //закончить транзакцию
     }
 
-    @Override
-    public void showNoteScreen(NoteEntity noteEntity) {
-        Fragment noteDetailFragment = NoteDetailFragment.newInstance(noteEntity); //создали фрагмент
-        getSupportFragmentManager()
-                .beginTransaction() //начать транзакцию
-
-                //здесь мы укакзываем в какой layout мы вставляем фрагмент
-                // (внимание! в данном случае у нас уже есть один фрагмент, этот фрагмент будет раздут повех первого фрагмента).
-                .add(R.id.detail_container_layout, noteDetailFragment, TAG_DETAIL_CONTAINER_LAYOUT_KEY)  //добавляем тэг (teg - )
-                .addToBackStack(null)//это список операций по нажатию кнопки назад. Если добавление фрагмента в данной транзакией, значит он его удалит.
-
-                .commit(); //закончить транзакцию
+    override fun showNoteScreen(noteEntity: NoteEntity) {
+        val noteDetailFragment: Fragment =
+            NoteDetailFragment.newInstance(noteEntity) //создали фрагмент
+        supportFragmentManager
+            .beginTransaction() //начать транзакцию
+            //здесь мы укакзываем в какой layout мы вставляем фрагмент
+            // (внимание! в данном случае у нас уже есть один фрагмент, этот фрагмент будет раздут повех первого фрагмента).
+            .add(
+                R.id.detail_container_layout,
+                noteDetailFragment,
+                TAG_DETAIL_CONTAINER_LAYOUT_KEY
+            ) //добавляем тэг (teg - )
+            .addToBackStack(null) //это список операций по нажатию кнопки назад. Если добавление фрагмента в данной транзакией, значит он его удалит.
+            .commit() //закончить транзакцию
     }
 
-    @Override
-    public void onDataChanged() {
-        NoteListFragment fragment = (NoteListFragment) getSupportFragmentManager().findFragmentByTag(TAG_MAIN_CONTAINER_LAYOUT_KEY);// находим нужный фрагмент
+    override fun onDataChanged() {
+        val fragment =
+            supportFragmentManager.findFragmentByTag(TAG_MAIN_CONTAINER_LAYOUT_KEY) as NoteListFragment? // находим нужный фрагмент
+        fragment?.onDataChanged()
+    }
+
+    override fun finishNoteDetailFragment() {
+        val fragment = supportFragmentManager.findFragmentByTag(TAG_DETAIL_CONTAINER_LAYOUT_KEY)
         if (fragment != null) {
-            fragment.onDataChanged();//если изменили передаем данные обратно
+            supportFragmentManager
+                .beginTransaction()
+                .remove(fragment) // удалить самого себя
+                .commit()
         }
     }
 
-    @Override
-    public void finishNoteDetailFragment() {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(TAG_DETAIL_CONTAINER_LAYOUT_KEY);
-        if (fragment != null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .remove(fragment) // удалить самого себя
-                    .commit();
-        }
+    companion object {
+        private const val TAG_MAIN_CONTAINER_LAYOUT_KEY = "TAG_MAIN_CONTAINER_LAYOUT_KEY"
+        private const val TAG_DETAIL_CONTAINER_LAYOUT_KEY = "TAG_DETAIL_CONTAINER_LAYOUT_KEY"
     }
 }
