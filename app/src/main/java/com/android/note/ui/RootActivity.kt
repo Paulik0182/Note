@@ -25,7 +25,23 @@ class RootActivity : AppCompatActivity(), NoteListFragment.Controller,
             .commit() //закончить транзакцию
     }
 
-    override fun showNoteScreen(noteEntity: NoteEntity) {
+    override fun onDataChanged() {
+        val fragment =
+            supportFragmentManager.findFragmentByTag(TAG_MAIN_CONTAINER_LAYOUT_KEY) as NoteListFragment // находим нужный фрагмент
+        fragment.onDataChanged()
+    }
+
+    override fun finishNoteDetailFragment() {
+        val fragment = supportFragmentManager.findFragmentByTag(TAG_DETAIL_CONTAINER_LAYOUT_KEY)
+        if (fragment != null) {
+            supportFragmentManager
+                .beginTransaction()
+                .remove(fragment) // удалить самого себя
+                .commit()
+        }
+    }
+
+    override fun showNoteScreen(noteEntity: NoteEntity?) {
         val noteDetailFragment: Fragment =
             NoteDetailFragment.newInstance(noteEntity) //создали фрагмент
         supportFragmentManager
@@ -39,21 +55,5 @@ class RootActivity : AppCompatActivity(), NoteListFragment.Controller,
             ) //добавляем тэг (teg - )
             .addToBackStack(null) //это список операций по нажатию кнопки назад. Если добавление фрагмента в данной транзакией, значит он его удалит.
             .commit() //закончить транзакцию
-    }
-
-    override fun onDataChanged() {
-        val fragment =
-            supportFragmentManager.findFragmentByTag(TAG_MAIN_CONTAINER_LAYOUT_KEY) as NoteListFragment? // находим нужный фрагмент
-        fragment?.onDataChanged()
-    }
-
-    override fun finishNoteDetailFragment() {
-        val fragment = supportFragmentManager.findFragmentByTag(TAG_DETAIL_CONTAINER_LAYOUT_KEY)
-        if (fragment != null) {
-            supportFragmentManager
-                .beginTransaction()
-                .remove(fragment) // удалить самого себя
-                .commit()
-        }
     }
 }

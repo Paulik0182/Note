@@ -1,44 +1,31 @@
-package com.android.note.ui;
+package com.android.note.ui
+
+import android.annotation.SuppressLint
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.android.note.R
+import com.android.note.domain.NoteEntity
+
 /**
  * У адаптера обязательно есть три метода которые нужно переапределить
  * - onCreateViewHolder
  * - onBindViewHolder
  * - getItemCount
  */
+class NoteAdapter(data: List<NoteEntity>, listener: InteractionListener) :
+    RecyclerView.Adapter<NoteViewHolder>() {
+    private var data: List<NoteEntity>//список сущьностей
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+    private val listener: InteractionListener//слушатель
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.android.note.R;
-import com.android.note.domain.NoteEntity;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
-
-    private List<NoteEntity> data; //список сущьностей
-    private final InteractionListener listener; //слушатель
-
-    //вместе со списком data, передаем объект listener
-    public NoteAdapter(List<NoteEntity> data, InteractionListener listener) {
-        this.data = new ArrayList<>(data);
-        this.listener = listener;
-    }
 
     //создание ViewHolder (создаем view)
-    @NonNull
-    @Override
-    public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         //создаем NoteViewHolder
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View itemView = inflater.inflate(R.layout.item_note, parent, false);
-        NoteViewHolder viewHolder = new NoteViewHolder(itemView);
-        return viewHolder;
+        val inflater = LayoutInflater.from(parent.context)
+        val itemView = inflater.inflate(R.layout.item_note, parent, false)
+        return NoteViewHolder(itemView)
     }
 
     //Связываем два поля указанные в конструкторе
@@ -46,36 +33,40 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     //возможна любая комбинация, количество полей.
     //для каждой разметки может быть свая комбинация, набор полей.
     //к имеющемуся holder подставить данные
-    @Override
-    public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
-
-        final NoteEntity noteEntity = data.get(position);//получили данные. Счетчик - position, счетчик необходим для класса RecyclerView
-
-        holder.bind(noteEntity, listener);
+    override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
+        val noteEntity =
+            data[position] //получили данные. Счетчик - position, счетчик необходим для класса RecyclerView
+        holder.bind(noteEntity, listener)
     }
 
     //вернуть количество данных
-    @Override
-    public int getItemCount() {
-        return data.size();//взяли размер массива. Возвращаем количество элементов в списк (size)
+    override fun getItemCount(): Int {
+        return data.size //взяли размер массива. Возвращаем количество элементов в списк (size)
     }
 
     //завели метод чтобы передать заметки в адаптер
-    public void setData(List<NoteEntity> notes) {
-        data = notes;
-        notifyDataSetChanged();//обновляет данные
+    @SuppressLint("NotifyDataSetChanged")
+    fun setData(notes: List<NoteEntity>) {
+        data = notes
+        notifyDataSetChanged() //обновляет данные
     }
 
     /**
      * Данный интерфейс описывает контракт, а именно нажатие на кнопку.
      * Далее это нажатие необходимо реализовать в class NoteAdapter.
-     * <p>
+     *
+     *
      * Интерфейсом нельзя создать объект, но передать можно. Можно передавать элементы которые сделаны поразному
      * (выполняют одно и тоже действие), но у них может быть разная реализация.
      * Обеспечивается единообразная работа с разными источниками данных.
      */
+    interface InteractionListener {
+        fun onItemClickListener(noteEntity: NoteEntity)
+    }
 
-    public interface InteractionListener {
-        void onItemClickListener(NoteEntity noteEntity);
+    //вместе со списком data, передаем объект listener
+    init {
+        this.data = ArrayList(data)
+        this.listener = listener
     }
 }

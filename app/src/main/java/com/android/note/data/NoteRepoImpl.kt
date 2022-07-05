@@ -14,13 +14,13 @@ class NoteRepoImpl : NoteRepo {
         data.add(noteEntity) //добавляем заметку в список
     }
 
-    override fun getNotes(): List<NoteEntity?> {
+    override fun getNotes(): List<NoteEntity> {
         return ArrayList(data) //отдаем копию списка, копию коллекции (лучше отдавать копию чтобы никто не повредил оригинальные данные)
     }
 
     override fun deleteNoteById(id: Int) {
         for (i in data.indices) {
-            if (data[i]!!.id == id) {
+            if (data[i].id == id) {
                 data.removeAt(i)
                 break
             }
@@ -35,13 +35,13 @@ class NoteRepoImpl : NoteRepo {
         return counter++
     }
 
-    override fun update(changedNote: NoteEntity?) {
-        val id = changedNote!!.id //это id который мы хотим изменить
+    override fun update(changedNote: NoteEntity) {
+        val id = changedNote.id //это id который мы хотим изменить
 
         //поиск старой заметки
         var oldNote: NoteEntity? = null
         for (i in data.indices) {
-            if (data[i]!!.id == id) { //находим нужный id
+            if (data[i].id == id) { //находим нужный id
                 oldNote = data[i] //получаем нужный элемент
                 break
             }
@@ -59,7 +59,7 @@ class NoteRepoImpl : NoteRepo {
     companion object {
         //заводим массив сущьности (хранилище заметок на основе массива)
         @JvmField
-        var data: MutableList<NoteEntity?> = ArrayList()
+        var data: MutableList<NoteEntity> = ArrayList()
     }
 
     //добавляем данные (создаем список)

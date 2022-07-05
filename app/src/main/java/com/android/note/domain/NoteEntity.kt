@@ -1,6 +1,5 @@
 package com.android.note.domain
 
-import android.graphics.Color
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
@@ -16,31 +15,5 @@ data class NoteEntity(
     val id: Int,
     var title: String,
     var content: String,
-    var color: Int? = null//такое написание делает переменную (поле) не обязательной для заполнения (написания)
+    var color: Int
 ) : Parcelable
-
-fun ololo() {
-    val note = NoteEntity(1, "", "", Color.GRAY)
-    note.content
-}
-
-//аргументы можно менять местами если их поименовать. Например
-fun ololo2() {
-    val note = NoteEntity(
-        1,
-        content = "",
-        title = ""
-    )
-    note.content
-}
-
-//У data class есть иквелс сравнение, автоматтически генерится хеш код
-fun ololo3() {
-    val note = NoteEntity(
-        1,
-        content = "",
-        title = ""
-    )
-    val note4 =
-        note.copy(title = "Привет")// создали копию объекта и изменили одну переменную, все остальное остается прежним
-}
