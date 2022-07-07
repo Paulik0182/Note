@@ -18,13 +18,16 @@ import com.android.note.domain.NoteRepo
 import com.android.note.ui.NoteAdapter.InteractionListener
 
 class NoteListFragment : Fragment() {
-    private val listener = InteractionListener { noteEntity ->
+//    object - создаем однаразовый анонимный класс
+private val listener = object : InteractionListener {
+    override fun onItemClickListener(noteEntity: NoteEntity) {
         val sb = ("onItemClickListener -"
                 + noteEntity.title
                 + noteEntity.content)
         Toast.makeText(context, sb, Toast.LENGTH_SHORT).show()
         showNoteScreen(noteEntity) // открывам отдельный экран отдельной заметки. noteEntity - конкретно какую заметку передаем
     }
+}
     private lateinit var noteRepo: NoteRepo//чтобы данные взять
     private lateinit var recyclerView: RecyclerView//для того чтобы показать список
     private lateinit var adapter: NoteAdapter//для приобразования данных
