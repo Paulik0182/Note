@@ -51,19 +51,6 @@ class NoteAdapter(data: List<NoteEntity>, listener: InteractionListener) :
         notifyDataSetChanged() //обновляет данные
     }
 
-    /**
-     * Данный интерфейс описывает контракт, а именно нажатие на кнопку.
-     * Далее это нажатие необходимо реализовать в class NoteAdapter.
-     *
-     *
-     * Интерфейсом нельзя создать объект, но передать можно. Можно передавать элементы которые сделаны поразному
-     * (выполняют одно и тоже действие), но у них может быть разная реализация.
-     * Обеспечивается единообразная работа с разными источниками данных.
-     */
-    interface InteractionListener {
-        fun onItemClickListener(noteEntity: NoteEntity)
-    }
-
     //вместе со списком data, передаем объект listener
     init {
         this.data = ArrayList(data)

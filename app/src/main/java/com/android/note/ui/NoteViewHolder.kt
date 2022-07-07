@@ -5,7 +5,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.note.R
 import com.android.note.domain.NoteEntity
-import com.android.note.ui.NoteAdapter.InteractionListener
 
 class NoteViewHolder  //конструктор на входе у которого View
     (itemView: View) : RecyclerView.ViewHolder(itemView) {
