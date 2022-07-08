@@ -13,12 +13,10 @@ import com.android.note.domain.NoteEntity
  * - onBindViewHolder
  * - getItemCount
  */
-class NoteAdapter(data: List<NoteEntity>, listener: InteractionListener) :
-    RecyclerView.Adapter<NoteViewHolder>() {
-    private var data: List<NoteEntity>//список сущьностей
-
-    private val listener: InteractionListener//слушатель
-
+class NoteAdapter(
+    private var data: List<NoteEntity>,
+    private val listener: (NoteEntity) -> Unit
+) : RecyclerView.Adapter<NoteViewHolder>() {
 
     //создание ViewHolder (создаем view)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
@@ -40,20 +38,13 @@ class NoteAdapter(data: List<NoteEntity>, listener: InteractionListener) :
     }
 
     //вернуть количество данных
-    override fun getItemCount(): Int {
-        return data.size //взяли размер массива. Возвращаем количество элементов в списк (size)
-    }
+    override fun getItemCount(): Int =
+        data.size //взяли размер массива. Возвращаем количество элементов в списк (size)
 
     //завели метод чтобы передать заметки в адаптер
     @SuppressLint("NotifyDataSetChanged")
     fun setData(notes: List<NoteEntity>) {
         data = notes
         notifyDataSetChanged() //обновляет данные
-    }
-
-    //вместе со списком data, передаем объект listener
-    init {
-        this.data = ArrayList(data)
-        this.listener = listener
     }
 }

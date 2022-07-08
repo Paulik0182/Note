@@ -17,13 +17,13 @@ import com.android.note.domain.NoteEntity
 import com.android.note.domain.NoteRepo
 
 class NoteListFragment : Fragment() {
-private val listener: InteractionListener = InteractionListener { noteEntity ->
-    val sb = ("onItemClickListener -"
-            + noteEntity.title
-            + noteEntity.content)
-    Toast.makeText(context, sb, Toast.LENGTH_SHORT).show()
-    showNoteScreen(noteEntity) // открывам отдельный экран отдельной заметки. noteEntity - конкретно какую заметку передаем
-}
+    private val listener = { noteEntity: NoteEntity ->
+        val sb = ("onItemClickListener -"
+                + noteEntity.title
+                + noteEntity.content)
+        Toast.makeText(context, sb, Toast.LENGTH_SHORT).show()
+        showNoteScreen(noteEntity) // открывам отдельный экран отдельной заметки. noteEntity - конкретно какую заметку передаем
+    }
 
     private lateinit var noteRepo: NoteRepo//чтобы данные взять
     private lateinit var recyclerView: RecyclerView//для того чтобы показать список
@@ -62,14 +62,13 @@ private val listener: InteractionListener = InteractionListener { noteEntity ->
     }
 
     // вариант написания 1
-    //        return (App) getContext().getApplicationContext(); // вариант написания 2
-    private val add: App
-        private get() = activity?.application as App // вариант написания 1
+//        return (App) getContext().getApplicationContext(); // вариант написания 2
+    private val add: App by lazy { requireActivity().application as App } // вариант написания 1
 
     //        return (App) getContext().getApplicationContext(); // вариант написания 2
-    //метод для открытия отдельной заметки
+//метод для открытия отдельной заметки
     private fun showNoteScreen(noteEntity: NoteEntity) {
-        controller!!.showNoteScreen(noteEntity)
+        controller.showNoteScreen(noteEntity)
         //для того чтобы фрагмент знал что-то об активети,
         // лучше всего сделать связь (взаимодействие) через интерфейс,
         // в этом случае фрагмент напрямую не будет обращатся к активити,
@@ -77,8 +76,7 @@ private val listener: InteractionListener = InteractionListener { noteEntity ->
     }
 
     //взаимодействие активити и фрагмента через контроллер
-    private val controller: Controller?
-        private get() = activity as Controller?
+    private val controller: Controller by lazy { activity as Controller }
 
     //это метод сработывает в момент присоединения фрагмента к активити
     override fun onAttach(context: Context) {
@@ -96,7 +94,7 @@ private val listener: InteractionListener = InteractionListener { noteEntity ->
     }
 
     //сам контроллер. указываем метод через который вызываем фрагмент (фрагмент с деталями  замиси)
-    //обязательно нужно в активити имплементировать (наследоватся от) интерфейс
+//обязательно нужно в активити имплементировать (наследоватся от) интерфейс
     internal interface Controller {
         fun showNoteScreen(noteEntity: NoteEntity?)
     }

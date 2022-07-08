@@ -27,8 +27,8 @@ class NoteDetailFragment : Fragment() {
     private var noteId = 0
     private var noteColor = 0
 
-    private fun setNoteEntity(noteEntity: NoteEntity?) {
-        idTv.text = noteEntity!!.id.toString()
+    private fun setNoteEntity(noteEntity: NoteEntity) {
+        idTv.text = noteEntity.id.toString()
         headingTitleEt.setText(noteEntity.title)
         contentEt.setText(noteEntity.content)
         noteId = noteEntity.id //запомнили значение
@@ -46,7 +46,7 @@ class NoteDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initViews(view)
         setListeners()
-        noteEntity = arguments?.getParcelable(NOTE_ENTITY_KEY)!!
+        noteEntity = requireArguments().getParcelable(NOTE_ENTITY_KEY)!!
         setNoteEntity(noteEntity)
     }
 
@@ -59,7 +59,7 @@ class NoteDetailFragment : Fragment() {
     }
 
     private fun setListeners() {
-        @SuppressLint("NonConstantResourceId") val OnClickListener =
+        @SuppressLint("NonConstantResourceId") val onClickListener =
             View.OnClickListener { view: View ->
                 when (view.id) {
                     R.id.save_button -> {
@@ -82,14 +82,12 @@ class NoteDetailFragment : Fragment() {
                 }
                 controller.finishNoteDetailFragment()
             }
-        saveButton.setOnClickListener(OnClickListener)
-        cancelButton.setOnClickListener(OnClickListener)
+        saveButton.setOnClickListener(onClickListener)
+        cancelButton.setOnClickListener(onClickListener)
     }
 
-    private val app: App
-        private get() = context?.applicationContext as App
-    private val controller: Controller
-        private get() = activity as Controller
+    private val app: App by lazy { requireContext().applicationContext as App }
+    private val controller: Controller by lazy { activity as Controller }
 
     //это метод сработывает в момент присоединения фрагмента к активити
     override fun onAttach(context: Context) {
@@ -111,13 +109,12 @@ class NoteDetailFragment : Fragment() {
     companion object {
         private const val NOTE_ENTITY_KEY = "NOTE_ENTITY_KEY"
 
-        //!!!!Вариант 2 !!!! - наиболее предпочтительно
         fun newInstance(noteEntity: NoteEntity?): NoteDetailFragment {
-            val args = Bundle()
-            args.putParcelable(NOTE_ENTITY_KEY, noteEntity)
-            val fragment = NoteDetailFragment() // отдельно создаем фрагмент
-            fragment.arguments = args // кладем во фрагмент аргументы
-            return fragment
+            return NoteDetailFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable(NOTE_ENTITY_KEY, noteEntity)
+                }
+            }
         }
     }
 }

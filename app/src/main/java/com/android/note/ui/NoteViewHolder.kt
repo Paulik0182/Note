@@ -8,11 +8,12 @@ import com.android.note.domain.NoteEntity
 
 class NoteViewHolder  //конструктор на входе у которого View
     (itemView: View) : RecyclerView.ViewHolder(itemView) {
-    var titleTextView = itemView.findViewById<TextView>(R.id.title_text_view)
-    var contentTextView = itemView.findViewById<TextView>(R.id.content_text_view)
-    fun bind(noteEntity: NoteEntity, listener: InteractionListener) {
+    private val titleTextView = itemView.findViewById<TextView>(R.id.title_text_view)
+    private val contentTextView = itemView.findViewById<TextView>(R.id.content_text_view)
+    fun bind(noteEntity: NoteEntity, listener: (NoteEntity) -> Unit) {
         titleTextView.text = noteEntity.title
         contentTextView.text = noteEntity.content
-        itemView.setOnClickListener { v: View -> listener.onItemClickListener(noteEntity) }
+        itemView.setOnClickListener { _ -> listener.invoke(noteEntity) }
+        // когда аргумент не нужен пишут вот так  _ -> (подчеркивание) или ничего не пишут
     }
 }
